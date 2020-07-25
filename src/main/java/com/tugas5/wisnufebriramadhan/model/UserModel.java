@@ -1,7 +1,10 @@
 package com.tugas5.wisnufebriramadhan.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Document(collection = "users")
 public class UserModel {
@@ -12,10 +15,21 @@ public class UserModel {
     private String password;
     private String role;
     private boolean active;
+    @Indexed(name = "usrName")
     private String name;
     private String email;
 
+    private List address;
+
     public UserModel() {
+    }
+
+    public List getAddress() {
+        return address;
+    }
+
+    public void setAddress(List address) {
+        this.address = address;
     }
 
     public String getId() {

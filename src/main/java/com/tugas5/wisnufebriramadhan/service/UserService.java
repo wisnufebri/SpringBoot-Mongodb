@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,6 +30,22 @@ public class UserService {
     public void deleteById(String id) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
-        usersRepository.deleteById(query, UserModel.class);
+        usersRepository.deleteById(id);
     }
+
+    public boolean updateUser(UserModel body) {
+        Optional<UserModel> result = usersRepository.findById(body.getId());
+        if (result != null) {
+            try {
+                usersRepository.save(body);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+
 }
